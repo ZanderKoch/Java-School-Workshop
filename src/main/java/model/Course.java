@@ -3,7 +3,16 @@ package model;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
+/**
+ * Represents a course.
+ *
+ * <p><strong>Equality and Hashing:</strong>
+ * Only the {@code id} field is used for {@code equals} and {@code hashcode}
+ * since it is unique and immutable, which ensures consistent behaviour in
+ * hash-based collections even if mutable fields are modified.</p>
+ */
 public class Course {
     private int id;
     private String courseName;
@@ -86,5 +95,21 @@ public class Course {
 
     public void unregister(Student student) {
         students.remove(student);
+    }
+
+    /*
+     * equals and hashcode are based only on id because that's the only field
+     * I felt sure I could assume is meant to be unique and immutable
+     * */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return id == course.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
