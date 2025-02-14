@@ -1,5 +1,15 @@
 package model;
 
+import java.util.Objects;
+
+/**
+ * Represents a student.
+ *
+ * <p><strong>Equality and Hashing:</strong>
+ * Only the {@code id} field is used for {@code equals} and {@code hashcode}
+ * since it is unique and immutable, which ensures consistent behaviour in
+ * hash-based collections even if mutable fields are modified.</p>
+ */
 public class Student {
     private final int id;
     private String name;
@@ -58,5 +68,22 @@ public class Student {
             throw new IllegalArgumentException("address may not be blank");
         }
         this.address = address;
+    }
+
+
+    /*
+    * equals and hashcode are based only on id because that's the only field
+    * I felt sure I could assume is meant to be unique and immutable
+    * */
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+        Student student = (Student) o;
+        return id == student.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
